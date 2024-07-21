@@ -1,31 +1,45 @@
+# version: "0.1"
 services:
+  # db:
+  #   image: mariadb:lts-noble
+  #   command: "--default-authentication-plugin=my_native_password"
+  #   restart: always
+  #   secrets:
+  #     - db-password
+  #   volumes:
+  #     - db-data:/var/lib/mysql
+  #   networks:
+  #     - db-private
+  #   environment:
+  #     - MYSQL_DATABASE=bank
+  #     - MYSQL_USER=root
+  #     - MYSQL_ROOT_PASSWORD=/run/secrets/db-password
+  #   expose:
+  #     - 3306
+  #     - 33060
+  #
   db:
-    image: mariadb:lts-noble
-    command: "--default-authentication-plugin=my_native_password"
-    restart: always
-    secrets:
-      - db-password
-    volumes:
-      - db-data:/var/lib/mysql
-    networks:
-      - private
-    environment:
-     - MYSQL_DATABASE=bank
-     - MYSQL_ROOT_PASSWORD=/run/secrets/db-password
-    expose:
-      - 3306
-      - 33060
-
-  core:
     build:
-      context: core
+      context: db
       target: builder
     restart: always
     secrets:
       - db-password
     networks:
-      - private
-      - public
+      - db-private
+    volumes:
+      - ./db:/data
+  core:
+    build:
+      context: core
+      target: builder
+    restart: always
+    volumes:
+      - db-data:/data/db
+    secrets:
+      - db-password
+    networks:
+      - db-private
     depends_on:
       - db
 
@@ -35,5 +49,4 @@ secrets:
   db-password:
     file: db/db-password.txt
 networks:
-  private:
-  public:
+  db-private:

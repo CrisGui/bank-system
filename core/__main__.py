@@ -1,11 +1,18 @@
 #!/usr/bin/env python
+# from dotenv import load_dotenv
 
-from .controller import Controller
-from .view import View
-from .model import Model
+from .controller import CoreController
+from .view import CoreView
+from .model import CoreModel
 
 def _main(*args, **kwargs):
-    Controller()
+    # load_dotenv()
+
+    con = CoreController()
+    view = CoreView()
+    model = CoreModel()
+    
+    con.run()
 
 if __name__=="__main__": 
     _main()

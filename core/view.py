@@ -3,7 +3,7 @@
 from .utils import Singleton
 from loguru import logger
 
-class View(metaclass=Singleton):
+class CoreView(metaclass=Singleton):
     def __init__(self):
         logger.info("View imported")
 
