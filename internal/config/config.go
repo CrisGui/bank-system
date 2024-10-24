@@ -27,6 +27,6 @@ func readConfigFile() map[interface{}]interface{} {
 func RunConfig() {
 	fmt.Println("Hello from the config")
 	for k, v := range readConfigFile() {
-		fmt.Printf("%s -> %d\n", k, v)
+		fmt.Printf("%s -> %v\n", k, v)
 	}
 }
