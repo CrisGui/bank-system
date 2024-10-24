@@ -2,7 +2,7 @@ package database
 
 import "fmt"
 
-func RunDatabase() {
+func RunTest() {
 	me := newUser().
 		Id(122).
 		Username("MASTER_TEST").
